@@ -13,14 +13,8 @@ class Customer::OrdersController < ApplicationController
 
    def create
       @order = Order.new(order_params)
-      @cart_items = CartItem.where(customer_id:[current_customer.id])
       if @order.save
-         @cart_items.each do |cart_item|
-           OrderItem.create!(order_id: @order.id, count:cart_item.count, item_id:cart_item.item_id, price:cart_item.item.price)
-         end
          redirect_to '/orders'
-      else
-         render 'confirm'
       end
    end
 
